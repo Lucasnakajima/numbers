@@ -59,7 +59,14 @@ public class ListAggregatorTest {
     @Test
     public void bug_8726(){
         ListDeduplicator deduplicator = new ListDeduplicator();
-        int distinct = aggregator.distinct(Arrays.asList(1, 2, 4, 2), deduplicator);
+         class Stub implements GenericListDeduplicator{
+
+             @Override
+             public List<Integer> deduplicate(List<Integer> list, GenericListSorter ListSorter) {
+                 return Arrays.asList(1,2,4);
+             }
+         }
+        int distinct = aggregator.distinct(Arrays.asList(1, 2, 4, 2), new Stub());
         Assertions.assertEquals(3,distinct);
     }
 }
