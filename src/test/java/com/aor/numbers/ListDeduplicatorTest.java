@@ -21,14 +21,13 @@ public class ListDeduplicatorTest {
     @Test
     public void deduplicate() {
         ListDeduplicator deduplicator = new ListDeduplicator();
-        List<Integer> distinct = deduplicator.deduplicate(list, new ListSorter());
+        List<Integer> distinct = deduplicator.deduplicate(list);
 
         Assertions.assertEquals(expected, distinct);
     }
 
     @Test
     public void deduplicating() {
-        ListDeduplicator deduplicator = new ListDeduplicator();
 
         class Stub implements GenericListSorter{
 
@@ -38,7 +37,9 @@ public class ListDeduplicatorTest {
             }
         }
 
-        List<Integer> distinct = deduplicator.deduplicate(Arrays.asList(1,2,4,2), new Stub());
+        ListDeduplicator deduplicator = new ListDeduplicator(new Stub());
+
+        List<Integer> distinct = deduplicator.deduplicate(Arrays.asList(1,2,4,2));
 
         Assertions.assertEquals(Arrays.asList(1,2,4), distinct);
     }
